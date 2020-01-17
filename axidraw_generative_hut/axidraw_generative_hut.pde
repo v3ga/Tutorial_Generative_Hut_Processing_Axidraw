@@ -12,28 +12,22 @@ ControlP5 cp5;
 
 // --------------------------------------------------
 int nbPoints = 3;
-float nbFigures = 62;
-float angleRotation = 0.07;
-float nbWaves = 2;
+
+float nbForms = 62;
 float radiusMin = 10;
-float radiusMax = 200;
+float radiusMax = 350;
+
+float nbWaves = 2;
+float angleRotation = 0.07;
 
 
 // --------------------------------------------------
 void setup()
 {
-//  size(630, 900);
-  size(740, 740);
-  initParameters();
+  size(800, 800);
   initControls();
 }
 
-// --------------------------------------------------
-void initParameters()
-{
-  radiusMin = 10;
-  radiusMax = 0.5*min(width,height);
-}
 
 
 // --------------------------------------------------
@@ -54,12 +48,12 @@ void draw()
   translate(width/2, height/2);
 
 
-  for (int n=0; n<nbFigures; n++)
+  for (int n=0; n<nbForms; n++)
   {
     pushMatrix();
-    rotate( map( sin(nbWaves*n/nbFigures*TWO_PI), -1, 1, -angleRotation, angleRotation) );
+    rotate( map( sin(nbWaves*n/(nbForms-1)*TWO_PI), -1, 1, -angleRotation, angleRotation) );
     
-    circle(nbPoints, map(n,0,nbFigures-1,radiusMax, radiusMin));
+    circle(nbPoints, map(n,0,nbForms-1,radiusMax, radiusMin));
 
     popMatrix();
   }
@@ -119,31 +113,26 @@ String timestamp()
 void initControls()
 {
 
-  cp5 = new ControlP5(this);
-//  Group groupGlobals = cp5.addGroup("Sketch rotation").setBackgroundHeight(320).setPosition(5, 20).setBarHeight(20).setWidth(400).setBackgroundColor(color(0, 190));
-//  groupGlobals.getCaptionLabel().getStyle().marginTop = 6;
-
-  int cp5_height = 18;
+  int hSlider = 18;
   int wSlider = width/2;
   int x = 5;
   int y = 5;
   int margin = 15;
   
-  cp5.setBroadcast(false);
-  
-  cp5.addSlider("nbPoints").setHeight(cp5_height).setWidth(wSlider).setPosition(x,y).setLabel("nb points").setRange(3, 10).setNumberOfTickMarks(10-3).setValue(nbPoints).linebreak();
-  y+=cp5_height+margin;
-  cp5.addSlider("nbFigures").setHeight(cp5_height).setWidth(wSlider).setPosition(x,y).setLabel("nb figures").setRange(1, 100).setNumberOfTickMarks(100).setValue(nbFigures).linebreak();
-  y+=cp5_height+margin;
-  cp5.addRange("radius").setHeight(cp5_height).setWidth(wSlider).setPosition(x,y).setLabel("radius").setRange(0, 0.5*min(width,height)).setRangeValues(10,0.5*min(width,height)).linebreak();
-  y+=cp5_height+margin;
-  cp5.addSlider("nbWaves").setHeight(cp5_height).setWidth(wSlider).setPosition(x,y).setLabel("nb waves").setRange(1, 5).setNumberOfTickMarks(5).setValue(nbWaves).linebreak();
-  y+=cp5_height+margin;
-  cp5.addSlider("angleRotation").setHeight(cp5_height).setWidth(wSlider).setPosition(x,y).setLabel("rotation").setRange(0, PI/2).setValue(angleRotation).linebreak();
-
-  cp5.setBroadcast(true);
+  cp5 = new ControlP5(this);
   cp5.setAutoDraw(false);
-  cp5.end();
+  
+  cp5.addSlider("nbPoints").setSize(wSlider,hSlider).setPosition(x,y).setLabel("nb points").setRange(3, 10).setNumberOfTickMarks(10-3).setValue(nbPoints);
+  y+=hSlider+margin;
+  cp5.addSlider("nbForms").setSize(wSlider,hSlider).setPosition(x,y).setLabel("nb forms").setRange(1, 100).setNumberOfTickMarks(100).setValue(nbForms);
+  y+=hSlider+margin;
+  cp5.addRange("radius").setSize(wSlider,hSlider).setWidth(wSlider).setPosition(x,y).setLabel("radius range").setRange(0, 370).setRangeValues(radiusMin,radiusMax);
+  y+=hSlider+margin;
+  cp5.addSlider("nbWaves").setSize(wSlider,hSlider).setWidth(wSlider).setPosition(x,y).setLabel("nb waves").setRange(1, 5).setNumberOfTickMarks(5).setValue(nbWaves);
+  y+=hSlider+margin;
+  cp5.addSlider("angleRotation").setSize(wSlider,hSlider).setPosition(x,y).setLabel("rotation").setRange(0, PI/2).setValue(angleRotation);
+
+
 }
 
 // --------------------------------------------------
