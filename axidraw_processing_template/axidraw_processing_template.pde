@@ -1,3 +1,16 @@
+/*
+
+Processing + Axidraw — Generative hut tutorial by Julien "v3ga" Gachadoat
+January 2020
+www.generativehut.com
+—
+
+www.instagram.com/julienv3ga
+https://twitter.com/v3ga
+https://github.com/v3ga
+
+*/
+
 // --------------------------------------------------
 import processing.svg.*;
 import java.util.*;
