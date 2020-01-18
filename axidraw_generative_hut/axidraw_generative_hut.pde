@@ -1,5 +1,3 @@
-// Sketch inspiré de https://turtletoy.net/turtle/f8526463e9
-
 // --------------------------------------------------
 import processing.svg.*;
 import java.util.*;
